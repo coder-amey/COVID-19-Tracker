@@ -58,7 +58,7 @@ def plot_growth(df, figure, title):
 if __name__ == "__main__":
 	print("\t\tCOVID-19 Growth Visualization\n")
 	country = input("Plot COVID-19 Growth trends for (enter the name of the country or enter \'Global\' for worldwide trends):\n").lower()
-	COVID19_growth = chart.figure(figsize = (28, 14), dpi = 75)
+	COVID19_growth = chart.figure(figsize = (28, 14), dpi = 75, facecolor = 'white')
 
 	if(country == "global"):
 		COVID19_global_df = data.read_csv("https://raw.githubusercontent.com/datasets/covid-19/master/data/worldwide-aggregated.csv", parse_dates = ['Date'])

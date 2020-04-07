@@ -3,12 +3,17 @@
 <body>
 
 <h2>COVID-19 Tracker</h2><br><h3>GLOBAL</h3>
-Button to Regional tracker<br>
+<br>
+<button onclick="window.location.href = 'India_tracker.html';">Go to Indian Tracker</button>
+<br>
 Last updated ??<br>
 <br>
 <br>
 <br>
-<div id ="table"></div>
+<div id ="table">LOADING...</div>
+<br>
+<br>
+<div id ="selection"></div>
 <br>
 <br>
 Insert prediction explanation<br>
@@ -22,6 +27,7 @@ Authors and links
 				tabulate(summary)
 			});
 		});
+
 	function tabulate(summary) {
 		var table = "<table border='1' cellspacing='1' cellpadding='1' class='table table-striped' style='font-weight:bold'>\n";
 		table += "<thead>\n";
@@ -29,15 +35,42 @@ Authors and links
 		table += "<tr><th>Confirmed</th><th>Deceased</th></tr>\n";
 		table += "</thead>\n";
 		table += "<tbody>\n";
-		for (var i =  0; i < 35; i++) {
+		for (var i =  0; i < 20; i++) {
 			var row = summary["data"][i];
 			table += "<tr><td>" + summary["index"][i] + "</td><td>" + row[0] + " &#8679 " + row[1] + "</td></td>";
 			table += "<td>" + row[2] + " &#8679 " + row[3] + "</td><td>" + row[4] + " &#8679 " + row[5] + "</td>";
 			table += "<td>" + row[6] + "</td><td>" + row[7] + "</td></tr>\n";
 		}
 		table += "</tbody></table>\n";
+
+		table += "<br><br>\n";
+		table += "<select id = 'country'>\n";
+		for(var i in summary["index"]) {
+			table += "<option value = '" + i + "'>" + summary["index"][i] + "</option>\n";	
+		}
+		table += "</select>";
+		table += "<button onclick = 'fetch_row(summary)'>Fetch Details</button>"
+
 		document.getElementById("table").innerHTML = table;
 	}
+
+	function fetch_row(summary) {
+		var i = document.getElementById('country').selectedIndex;
+		var row = summary["data"][i]
+		var entry = "<table border='1' cellspacing='1' cellpadding='1' class='table table-striped' style='font-weight:bold'>\n";
+		entry += "<thead>\n";
+		entry += "<tr><th rowspan='2'>Region</th><th rowspan='2'>Confirmed</th><th rowspan='2'>Recovered/<br>Migrated</th><th rowspan='2'>Deceased</th><th colspan='2'>Prediction<br>(for T + 1 Day)</th></tr>\n";
+		entry += "<tr><th>Confirmed</th><th>Deceased</th></tr>\n";
+		entry += "</thead>\n";
+		entry += "<tbody>\n";
+		entry += "<tr><td>" + summary["index"][i] + "</td><td>" + row[0] + " &#8679 " + row[1] + "</td></td>";
+		entry += "<td>" + row[2] + " &#8679 " + row[3] + "</td><td>" + row[4] + " &#8679 " + row[5] + "</td>";
+		entry += "<td>" + row[6] + "</td><td>" + row[7] + "</td></tr>\n";
+		entry += "</tbody></table>\n";
+
+		document.getElementById("selection").innerHTML = entry;
+	}
+	
 </script>
 </body>
 </html>

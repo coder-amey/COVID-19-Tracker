@@ -34,22 +34,3 @@ def exp_reg(y):
 def exp_predict(x, a, b):
 	'''Returns a prediction for an exponenial series characterised by (a, b).'''
 	return((a ** x) * b)
-
-if __name__ == "__main__":
-	print("\tREGRESSION MODELER\nExponential model for COVID-19 prediction.")
-	Y = list(map(float, input("Enter the last 5 tallies: ").split()))
-	y = maths.log(Y)
-	print("Exponential Regression Model Characteristics:\ny = b.(a^x)\t=>\tlog(y) = x.log(a) + log(b)")
-	a, b = maths.exp(lin_reg(y))
-	print("a = {}\tb = {}.".format(a, b))
-
-	print("Given data:\nDAY\tCASES")
-	for i in range(len(y)):
-		print(i, Y[i], sep = "\t")
-
-
-	Y = [((a ** x) * b) for x in range(5, 8)]
-
-	print("Predictions:\nDAY\tCASES")
-	for i in range(3):
-		print(i, Y[i], sep = "\t")

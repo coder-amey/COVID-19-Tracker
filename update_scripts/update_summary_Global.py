@@ -1,5 +1,7 @@
 import pandas as data
 import os.path
+import json
+from datetime import datetime
 from regression import *
 
 data.options.mode.chained_assignment = None
@@ -46,6 +48,9 @@ latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrat
 latest_tally = latest_tally.set_index("Region")
 
 #Write the table in the JSON file.
-from datetime import datetime
 base_dir = os.path.join(os.path.dirname(__file__), "../")		#Obtain the path to the base directory for absosulte addressing.
-latest_tally.to_json(base_dir + 'data/Global_summary.json', orient = 'split', index = True)
+summary = json.loads(latest_tally.to_json(orient = 'split', index = True))
+summary["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"
+with open(base_dir + 'data/Global_summary.json', 'w') as jfile:
+	json.dump(summary, jfile)
+

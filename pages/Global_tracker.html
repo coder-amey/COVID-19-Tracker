@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>COVID-19 Tracker</h2><br><h3>GLOBAL</h3>
+Button to Regional tracker<br>
+Last updated ??<br>
+<br>
+<br>
+<br>
+<div id ="table"></div>
+<br>
+<br>
+Insert prediction explanation<br>
+Authors and links
+<script >
+	var summary;
+	fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/dashboard/Global_summary.json')
+		.then(function(response) {
+			return response.text().then(function(text) {
+				summary = JSON.parse(text);
+				tabulate(summary)
+			});
+		});
+	function tabulate(summary) {
+		var table = "<table border='1' cellspacing='1' cellpadding='1' class='table table-striped' style='font-weight:bold'>\n";
+		table += "<thead>\n";
+		table += "<tr><th rowspan='2'>Region</th><th rowspan='2'>Confirmed</th><th rowspan='2'>Recovered/<br>Migrated</th><th rowspan='2'>Deceased</th><th colspan='2'>Prediction<br>(for T + 1 Day)</th></tr>\n";
+		table += "<tr><th>Confirmed</th><th>Deceased</th></tr>\n";
+		table += "</thead>\n";
+		table += "<tbody>\n";
+		for (var i =  0; i < 35; i++) {
+			var row = summary["data"][i];
+			table += "<tr><td>" + summary["index"][i] + "</td><td>" + row[0] + " &#8679 " + row[1] + "</td></td>";
+			table += "<td>" + row[2] + " &#8679 " + row[3] + "</td><td>" + row[4] + " &#8679 " + row[5] + "</td>";
+			table += "<td>" + row[6] + "</td><td>" + row[7] + "</td></tr>\n";
+		}
+		table += "</tbody></table>\n";
+		document.getElementById("table").innerHTML = table;
+	}
+</script>
+</body>
+</html>

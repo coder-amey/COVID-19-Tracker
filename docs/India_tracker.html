@@ -2,15 +2,15 @@
 <html>
 <body>
 
-<h2>COVID-19 Tracker</h2><br><h3>INDIA - Regional</h3>
+<h2>COVID-19 Tracker</h2>
+<br>
 <br>
 <button onclick="window.location.href = 'Global_tracker.html';">Go to Global Tracker</button>
 <br>
-Last updated ??<br>
+<br>
+<div id ="table">LOADING...</div>
 <br>
 <br>
-<br>
-<div id ="table"></div>
 <br>
 <br>
 Insert prediction explanation<br>
@@ -25,8 +25,10 @@ Authors and links
 			});
 		});
 	function tabulate(summary) {
-		var table = "<table border='1' cellspacing='1' cellpadding='1' class='table table-striped' style='font-weight:bold'>\n";
-		table += "<thead>\n";
+		var table = "Last updated: " + summary["update_time"] + ".<br>\n"
+		table += "<h3>INDIA - Regional</h3>\n"
+		table += "<table border='1' cellspacing='1' cellpadding='1' class='table table-striped'>\n";
+		table += "<thead style='font-weight:bold'>\n";
 		table += "<tr><th rowspan='2'>Region</th><th rowspan='2'>Confirmed</th><th rowspan='2'>Recovered/<br>Migrated</th><th rowspan='2'>Deceased</th><th colspan='2'>Prediction<br>(for T + 1 Day)</th></tr>\n";
 		table += "<tr><th>Confirmed</th><th>Deceased</th></tr>\n";
 		table += "</thead>\n";

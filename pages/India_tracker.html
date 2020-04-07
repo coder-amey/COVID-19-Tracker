@@ -15,7 +15,7 @@ Insert prediction explanation<br>
 Authors and links
 <script >
 	var summary;
-	fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/dashboard/India_regional_summary.json')
+	fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/master/data/India_regional_summary.json')
 		.then(function(response) {
 			return response.text().then(function(text) {
 				summary = JSON.parse(text);

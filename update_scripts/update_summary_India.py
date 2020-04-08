@@ -5,7 +5,7 @@ from datetime import datetime
 from regression import *
 
 data.options.mode.chained_assignment = None
-samples = 5			#Points to be sampled for regression.
+samples = 3			#Points to be sampled for regression.
 time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-19-India_Data/master/time-series/India_regional_aggregated.csv")		#Load the time-series.
 
 latest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-1]]		#Date of last update.
@@ -35,8 +35,8 @@ for region in predictables.Region.unique():
 	window = latest_tally.Region == region
 	idx = latest_tally[window].index
 	
-	latest_tally.loc[idx, "CNF_pred"] = int(exp_predict(samples + 1, *exp_reg(time_series[time_series.Region == region].Confirmed.tolist()[-samples:])))
-	latest_tally.loc[idx, "DCS_pred"] = int(exp_predict(samples + 1, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:])))
+	latest_tally.loc[idx, "CNF_pred"] = int(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Confirmed.tolist()[-samples:])))
+	latest_tally.loc[idx, "DCS_pred"] = int(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:])))
 
 #Re-index, re-order and sort the columns.
 latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = "Confirmed", ascending = False, ignore_index = True)

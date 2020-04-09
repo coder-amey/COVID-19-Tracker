@@ -1,47 +1,70 @@
 <!DOCTYPE html>
-<html>
-<body>
+<html lang="en">
+	<head>
+		<title>COVID-19</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<!-- Google Font Poppins -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+		<!-- Icon Library -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!-- Style Library -->
+		<link rel="stylesheet" href="style.css">
+		<!-- JavaScript Library -->
+		<script src="script.js"></script>
+		
+		<style>
+			.cell_block {
+				display:inline-block;
+				text-align: left;
+				width: 50px;
+			}
+		</style>
 
-<h2>COVID-19 Tracker</h2>
-<br>
-<br>
-<button onclick="window.location.href = 'Global_tracker.html';">Go to Global Tracker</button>
-<br>
-<br>
-<div id ="table">LOADING...</div>
-<br>
-<br>
-<br>
-<br>
-Insert prediction explanation<br>
-Authors and links
-<script >
-	var summary;
-	fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/master/data/India_regional_summary.json')
-		.then(function(response) {
-			return response.text().then(function(text) {
-				summary = JSON.parse(text);
-				tabulate(summary)
-			});
-		});
-	function tabulate(summary) {
-		var table = "Last updated: " + summary["update_time"] + ".<br>\n"
-		table += "<h3>INDIA - Regional</h3>\n"
-		table += "<table border='1' cellspacing='1' cellpadding='1' class='table table-striped'>\n";
-		table += "<thead style='font-weight:bold'>\n";
-		table += "<tr><th rowspan='2'>Region</th><th rowspan='2'>Confirmed</th><th rowspan='2'>Recovered/<br>Migrated</th><th rowspan='2'>Deceased</th><th colspan='2'>Prediction<br>(for T + 1 Day)</th></tr>\n";
-		table += "<tr><th>Confirmed</th><th>Deceased</th></tr>\n";
-		table += "</thead>\n";
-		table += "<tbody>\n";
-		for (i in summary["data"]) {
-			var row = summary["data"][i];
-			table += "<tr><td>" + summary["index"][i] + "</td><td>" + row[0] + " &#8679 " + row[1] + "</td></td>";
-			table += "<td>" + row[2] + " &#8679 " + row[3] + "</td><td>" + row[4] + " &#8679 " + row[5] + "</td>";
-			table += "<td>" + row[6] + "</td><td>" + row[7] + "</td></tr>\n";
-		}
-		table += "</tbody></table>\n";
-		document.getElementById("table").innerHTML = table;
-	}
-</script>
-</body>
+		<script>
+			var summary;
+			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/master/data/India_regional_summary.json')
+				.then(function(response) {
+					return response.text().then(function(text) {
+						summary = JSON.parse(text);
+						tabulate(summary, summary["data"].length)
+					});
+				});
+		</script>
+	</head>
+
+	<body>
+		<br>
+		<div class="container">
+			<div class="text-center">
+				<div class="pt-1 pb-3">
+					<h1 class="primary-title mb-2">COVID-19 Tracker</h1>
+				</div>
+
+				<div>
+					<button type="button" class="btn" onclick="window.location.href = 'Global_tracker.html';">Go to Global Trends</button>
+				</div>
+
+				<div>
+					<h3 class='text-center pt-4'>India - Regional</h3><br>
+				</div>
+			</div>
+			
+			<div id ="table">LOADING...</div>
+			
+			<div class="footer">
+				<h6 class="footer-text">Insert prediction explanation</h6>
+				<div class="footer-social">
+					<h6 class="footer-text">Authors and links</h6>
+					<a class="btn-floating btn-lg btn-tw" type="button" role="button"><i class="fa fa-github"></i></a>
+					<a class="btn-floating btn-lg btn-tw" type="button" role="button"><i class="fa fa-twitter"></i></a>
+					<a class="btn-floating btn-lg btn-tw" type="button" role="button"><i class="fa fa-linkedin"></i></a>
+					<a class="btn-floating btn-lg btn-tw" type="button" role="button"><i class="fa fa-facebook"></i></a>
+					<a class="btn-floating btn-lg btn-tw" type="button" role="button"><i class="fa fa-google"></i></a>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

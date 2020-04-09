@@ -1,0 +1,108 @@
+.body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #FAFAFA;
+}
+
+.container {
+	width: 75%;
+}
+
+.primary-title {
+	font-weight: bold;
+}
+
+.secondary-title {
+	letter-spacing: 0.5em;
+	font-size: 1em;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.footer-text {
+	padding: 0.5rem 1rem;
+}
+
+.footer-social {}
+
+.btn {
+	color: #fff;
+	background-color: #da4a38;
+}
+
+.sel {
+	color: grey;
+	font-weight: bold;
+	background-color: #eaeaea;
+	border: 1px solid transparent;
+	padding: 7px 7px;
+}
+
+.table thead th {
+	border: none;
+}
+
+.centred {
+	text-align: center;
+}
+
+.region {
+	color: grey;
+	text-shadow: 1px 1px grey;
+}
+
+.confirmed {
+	color: #f3d303;
+	text-align: center;
+	font-weight: bold;
+	text-shadow: 1px 1px grey;
+}
+
+.recovered {
+	color: #689F38;
+	text-align: center;
+	font-weight: bold;
+}
+
+.deceased {
+	color: #d32f2f;
+	text-align: center;
+	font-weight: bold;
+}
+
+.increment {
+	display:inline-block;
+	padding-left: 5px;
+	font-weight: normal;
+	font-style: italic;
+	font-size: 13px;
+}
+
+.up_red {
+	display:inline-block;
+    border-bottom:8px solid #c00;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    vertical-align:middle;
+}
+
+.up_yellow {
+	display:inline-block;
+    border-bottom:8px solid #fd0;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    vertical-align:middle;
+}
+
+.up_green {
+	display:inline-block;
+    border-bottom:8px solid #090;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    vertical-align:middle;
+}
+
+@media only screen and (max-width: 768px) {
+	.container {
+		width: 768px;
+	}
+}

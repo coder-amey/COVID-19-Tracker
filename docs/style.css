@@ -1,6 +1,15 @@
-.body {
+body {
 	font-family: 'Poppins', sans-serif;
 	background-color: #FAFAFA;
+}
+
+a {
+	color: #fff;
+}
+
+a:hover {
+	color: #B0BEC5;
+	text-decoration: none;
 }
 
 .container {
@@ -12,26 +21,10 @@
 }
 
 .secondary-title {
-	letter-spacing: 0.5em;
-	font-size: 1em;
+	letter-spacing: 0.5rem;
+	font-size: 1rem;
 	font-weight: bold;
 	text-transform: uppercase;
-}
-
-.footer {
-	display:flex;
-    flex-direction:row;
-    justify-content: space-around;
-}
-
-.footer-text {
-	display:flex;
-    flex-direction:column;
-	padding: 0.5rem 1rem;
-}
-
-.footer-social {
-	display: inline-block;
 }
 
 .btn {
@@ -56,15 +49,14 @@
 }
 
 .region {
-	color: grey;
-	text-shadow: 1px 1px grey;
+	color: #343a40;
+	font-weight: bold;
 }
 
 .confirmed {
-	color: #f3d303;
+	color: #e53935;
 	text-align: center;
 	font-weight: bold;
-	text-shadow: 1px 1px grey;
 }
 
 .recovered {
@@ -74,7 +66,7 @@
 }
 
 .deceased {
-	color: #d32f2f;
+	color: #b71c1c;
 	text-align: center;
 	font-weight: bold;
 }
@@ -89,7 +81,15 @@
 
 .up_red {
 	display:inline-block;
-    border-bottom:8px solid #c00;
+    border-bottom:8px solid #b71c1c;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    vertical-align:middle;
+}
+
+.up_light_red {
+	display:inline-block;
+    border-bottom:8px solid #e53935;
     border-left:8px solid transparent;
     border-right:8px solid transparent;
     vertical-align:middle;
@@ -109,6 +109,37 @@
     border-left:8px solid transparent;
     border-right:8px solid transparent;
     vertical-align:middle;
+}
+
+.footer {
+	background-color: #343a40;
+	color: #fff;
+	padding: 2rem 12rem 2rem 12rem;
+}
+
+.footer-info {
+	display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+   	max-width: 70rem;
+	margin: auto;
+	padding: 3rem 0 3rem 0;
+}
+
+.footer-info .sources {
+	display: flex;
+	flex-direction: column;
+}
+
+.author-social a {
+	padding: 0.5rem 1rem 0.5rem 0;
+}
+
+.footer-text {
+	text-align: justify;
+	max-width: 70rem;
+	margin: auto;
+	padding-top: 3rem;
 }
 
 @media only screen and (max-width: 768px) {

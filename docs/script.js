@@ -13,7 +13,7 @@ function tabulate(summary, max_rows) {
 		var row = summary["data"][i];
 		shade += step;
 		table += "<tr style='background-color:#ff" + Math.round(shade).toString(16) + Math.round(shade).toString(16) + ";'><td class='region'>" + summary["index"][i] + "</td>";
-		table += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_yellow'></span> <span class='increment'> " + row[1] + "</span></td>";
+		table += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_light_red'></span> <span class='increment'> " + row[1] + "</span></td>";
 		table += "<td class='recovered'><span class = 'cell_block'>" + row[2] + " </span><span class='up_green'></span> <span class='increment'> " + row[3] + "</span></td>";
 		table += "<td class='deceased'><span class = 'cell_block'>" + row[4] + "  </span><span class='up_red'></span> <span class='increment'> " + row[5] + "</span></td>";
 		table += "<td class='confirmed'>" + row[6] + "</td><td class='deceased'>" + row[7] + "</td></tr>\n";

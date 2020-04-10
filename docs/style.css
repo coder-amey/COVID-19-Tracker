@@ -18,11 +18,21 @@
 	text-transform: uppercase;
 }
 
+.footer {
+	display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+}
+
 .footer-text {
+	display:flex;
+    flex-direction:column;
 	padding: 0.5rem 1rem;
 }
 
-.footer-social {}
+.footer-social {
+	display: inline-block;
+}
 
 .btn {
 	color: #fff;

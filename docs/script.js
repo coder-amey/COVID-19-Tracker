@@ -3,10 +3,10 @@ function tabulate(summary, max_rows) {
 	var step = (255 - shade) / max_rows;
 	var table = "<h6>Last updated: " + summary["update_time"] + "</h6>\n";
 	table += "<table class='table'><thead class='thead-dark'>\n";
-	table += "<tr><th rowspan='2'>Region</th><th class='centred' rowspan='2'>Confirmed</th>";
-	table += "<th class='centred' rowspan='2'>Recovered/Migrated</th><th class='centred' rowspan='2'>Deceased</th>";
-	table += "<th class='centred' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
-	table += "<tr><th class='centred'>Confirmed</th><th class='centred'>Deceased</th></tr>\n";
+	table += "<tr><th rowspan='2'>Region</th><th style='text-align: center' rowspan='2'>Confirmed</th>";
+	table += "<th style='text-align: center' rowspan='2'>Recovered/Migrated</th><th style='text-align: center' rowspan='2'>Deceased</th>";
+	table += "<th style='text-align: center' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
+	table += "<tr><th style='text-align: center'>Confirmed</th><th style='text-align: center'>Deceased</th></tr>\n";
 	table += "</thead>\n";
 	table += "<tbody>\n";
 	for (var i = 0; i < max_rows; i ++) {
@@ -36,10 +36,10 @@ function fetch_row(summary) {
 	var i = document.getElementById('country').selectedIndex;
 	var row = summary['data'][i];
 	var entry = "<table class='table'><thead class='thead-dark'>\n";
-	entry += "<tr><th rowspan='2'>Region</th><th class='centred' rowspan='2'>Confirmed</th>";
-	entry += "<th class='centred' rowspan='2'>Recovered/Migrated</th><th class='centred' rowspan='2'>Deceased</th>";
-	entry += "<th class='centred' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
-	entry += "<tr><th class='centred'>Confirmed</th><th class='centred'>Deceased</th></tr>\n";
+	entry += "<tr><th rowspan='2'>Region</th><th style='text-align: center' rowspan='2'>Confirmed</th>";
+	entry += "<th style='text-align: center' rowspan='2'>Recovered/Migrated</th><th style='text-align: center' rowspan='2'>Deceased</th>";
+	entry += "<th style='text-align: center' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
+	entry += "<tr><th style='text-align: center'>Confirmed</th><th style='text-align: center'>Deceased</th></tr>\n";
 	entry += "</thead>\n";
 	entry += "<tbody><tr style='background-color:#ffcbcb;'><td class='region'>" + summary["index"][i] + "</td>";
 	entry += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_yellow'></span> <span class='increment'> " + row[1] + "</span></td>";

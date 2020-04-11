@@ -4,7 +4,8 @@ body {
 }
 
 a {
-	color: #fff;
+	color: inherit;
+	text-decoration: underline;
 }
 
 a:hover {
@@ -13,7 +14,9 @@ a:hover {
 }
 
 .container {
-	width: 75%;
+	width: 85%;
+	height: 70%;
+	padding: 0px 0px 0px 0px;
 }
 
 .primary-title {
@@ -34,18 +37,16 @@ a:hover {
 
 .sel {
 	color: grey;
+	width: 55%;
 	font-weight: bold;
 	background-color: #eaeaea;
 	border: 1px solid transparent;
 	padding: 7px 7px;
 }
 
-.table thead th {
+table thead th tbody tr td {
 	border: none;
-}
-
-.centred {
-	text-align: center;
+	border-collapse: collapse;
 }
 
 .region {
@@ -95,14 +96,6 @@ a:hover {
     vertical-align:middle;
 }
 
-.up_yellow {
-	display:inline-block;
-    border-bottom:8px solid #fd0;
-    border-left:8px solid transparent;
-    border-right:8px solid transparent;
-    vertical-align:middle;
-}
-
 .up_green {
 	display:inline-block;
     border-bottom:8px solid #090;
@@ -111,39 +104,48 @@ a:hover {
     vertical-align:middle;
 }
 
+ul.line {
+	list-style-type: none;
+	text-align: justify;
+	padding: 0px;
+	margin-left: 3%;
+	margin-bottom: 1%;
+}
+
+.info_banner {
+	width: 100%;
+	color: #343a40;
+	border-left: 10px solid #343a40;
+	text-align: left;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	margin-top: 5rem;
+	margin-bottom: 3rem;
+}
+
 .footer {
+	width: 100%;
 	background-color: #343a40;
 	color: #fff;
-	padding: 2rem 12rem 2rem 12rem;
+	padding: 2rem 2rem 2rem 2rem;
 }
 
 .footer-info {
-	display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-   	max-width: 70rem;
-	margin: auto;
-	padding: 3rem 0 3rem 0;
+   	width: 45%;
+   	display: inline-block;
+	margin-top: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
-.footer-info .sources {
-	display: flex;
-	flex-direction: column;
-}
-
-.author-social a {
-	padding: 0.5rem 1rem 0.5rem 0;
-}
-
-.footer-text {
-	text-align: justify;
-	max-width: 70rem;
-	margin: auto;
-	padding-top: 3rem;
+.author-social {
+	letter-spacing: 5px;
+	font-size: 20px;
 }
 
 @media only screen and (max-width: 768px) {
-	.container {
-		width: 768px;
+	.container .footer-info{
+		width: 90%;
+		display: block;
+		padding-bottom: 1.5rem;
 	}
 }

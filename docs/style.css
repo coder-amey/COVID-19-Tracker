@@ -44,9 +44,17 @@ a:hover {
 	padding: 7px 7px;
 }
 
+.table_view {
+	overflow: scroll;
+}
+
 table thead th tbody tr td {
 	border: none;
 	border-collapse: collapse;
+}
+
+tr:nth-child(odd) {
+	background-color: #f2f2f2;
 }
 
 .region {
@@ -104,6 +112,11 @@ table thead th tbody tr td {
     vertical-align:middle;
 }
 
+.selection {
+	margin-bottom: 1.5rem;
+	overflow: scroll;
+}
+
 ul.line {
 	list-style-type: none;
 	text-align: justify;
@@ -130,11 +143,20 @@ ul.line {
 	padding: 2rem 2rem 2rem 2rem;
 }
 
+.footer-container {
+	width: 55%;
+	height: 70%;
+	margin-left: 32%;
+	padding: 0px 0px 0px 0px;
+}
+
 .footer-info {
    	width: 45%;
    	display: inline-block;
 	margin-top: 1.5rem;
 	margin-bottom: 1.5rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
 }
 
 .author-social {
@@ -143,9 +165,25 @@ ul.line {
 }
 
 @media only screen and (max-width: 768px) {
-	.container .footer-info{
+	.container {
 		width: 90%;
 		display: block;
 		padding-bottom: 1.5rem;
 	}
+
+	.footer-container {		
+		margin: auto;
+		width: 70%;
+		display: block;
+		padding-bottom: 1.5rem;
+	}
+
+	.footer-info {
+		width: 90%;
+		display: block;
+		padding-left: 0px;
+		padding-right;
+		padding-bottom: 1.5rem;
+	}
+
 }

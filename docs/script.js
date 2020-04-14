@@ -12,7 +12,7 @@ function tabulate(summary, max_rows) {
 	for (var i = 0; i < max_rows; i ++) {
 		var row = summary["data"][i];
 		shade += step;
-		table += "<tr style='background-color:#ff" + Math.round(shade).toString(16) + Math.round(shade).toString(16) + ";'><td class='region'>" + summary["index"][i] + "</td>";
+		table += "<tr><td class='region'>" + summary["index"][i] + "</td>";
 		table += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_light_red'></span> <span class='increment'> " + row[1] + "</span></td>";
 		table += "<td class='recovered'><span class = 'cell_block'>" + row[2] + " </span><span class='up_green'></span> <span class='increment'> " + row[3] + "</span></td>";
 		table += "<td class='deceased'><span class = 'cell_block'>" + row[4] + "  </span><span class='up_red'></span> <span class='increment'> " + row[5] + "</span></td>";
@@ -41,7 +41,7 @@ function fetch_row(summary) {
 	entry += "<th style='text-align: center' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
 	entry += "<tr><th style='text-align: center'>Confirmed</th><th style='text-align: center'>Deceased</th></tr>\n";
 	entry += "</thead>\n";
-	entry += "<tbody><tr style='background-color:#ffcbcb;'><td class='region'>" + summary["index"][i] + "</td>";
+	entry += "<tbody><tr><td class='region'>" + summary["index"][i] + "</td>";
 	entry += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_yellow'></span> <span class='increment'> " + row[1] + "</span></td>";
 	entry += "<td class='recovered'><span class = 'cell_block'>" + row[2] + " </span><span class='up_green'></span> <span class='increment'> " + row[3] + "</span></td>";
 	entry += "<td class='deceased'><span class = 'cell_block'>" + row[4] + "  </span><span class='up_red'></span> <span class='increment'> " + row[5] + "</span></td>";

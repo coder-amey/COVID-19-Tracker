@@ -23,12 +23,13 @@ latest_tally["DCS_pred"] = "Insufficient Data"
 
 #Subtract yesterday's tally from the respective cases from every region.
 for region in yest_tally.Region.unique():
-	window = latest_tally.Region == region
+	window = latest_tally.Region.str.strip('#') == region
 	window_yest = yest_tally.Region == region
 	idx = latest_tally[window].index
 	latest_tally.loc[idx, "CNF_inc"] = latest_tally[window].iat[0, 2] - yest_tally[window_yest].iat[0, 2]
 	latest_tally.loc[idx, "RCV_inc"] = latest_tally[window].iat[0, 3] - yest_tally[window_yest].iat[0, 3]
 	latest_tally.loc[idx, "DCS_inc"] = latest_tally[window].iat[0, 4] - yest_tally[window_yest].iat[0, 4]
+
 
 #Calculate and store the predictions for each region.
 for region in predictables.Region.unique():

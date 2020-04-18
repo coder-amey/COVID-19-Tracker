@@ -42,7 +42,7 @@ function fetch_row(summary) {
 	entry += "<tr><th style='text-align: center'>Confirmed</th><th style='text-align: center'>Deceased</th></tr>\n";
 	entry += "</thead>\n";
 	entry += "<tbody><tr><td class='region'>" + summary["index"][i] + "</td>";
-	entry += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_yellow'></span> <span class='increment'> " + row[1] + "</span></td>";
+	entry += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_light_red'></span> <span class='increment'> " + row[1] + "</span></td>";
 	entry += "<td class='recovered'><span class = 'cell_block'>" + row[2] + " </span><span class='up_green'></span> <span class='increment'> " + row[3] + "</span></td>";
 	entry += "<td class='deceased'><span class = 'cell_block'>" + row[4] + "  </span><span class='up_red'></span> <span class='increment'> " + row[5] + "</span></td>";
 	entry += "<td class='confirmed'>" + row[6] + "</td><td class='deceased'>" + row[7] + "</td></tr>\n";

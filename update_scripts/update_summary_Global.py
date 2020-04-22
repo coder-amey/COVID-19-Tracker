@@ -23,9 +23,9 @@ latest_tally["CNF_inc"] = latest_tally["Confirmed"].copy()
 latest_tally["RCV_inc"] = latest_tally["Recovered/Migrated"].copy()
 latest_tally["DCS_inc"] = latest_tally["Deceased"].copy()
 
-#Add new columns to store predictions (initialized to "Insufficient Data").
-latest_tally["CNF_pred"] = "Insufficient Data"
-latest_tally["DCS_pred"] = "Insufficient Data"
+#Add new columns to store predictions (initialized to current tallies).
+latest_tally["CNF_pred"] = latest_tally["Confirmed"].copy()
+latest_tally["DCS_pred"] = latest_tally["Deceased"].copy()
 
 #Subtract yesterday's tally from the respective cases from every region.
 for region in yest_tally.Region.unique():
@@ -40,8 +40,8 @@ for region in yest_tally.Region.unique():
 for region in predictables.Region.unique():
 	window = latest_tally.Region == region
 	idx = latest_tally[window].index
-	latest_tally.loc[idx, "CNF_pred"] = int(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Confirmed.tolist()[-samples:])))
-	latest_tally.loc[idx, "DCS_pred"] = int(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:])))
+	latest_tally.loc[idx, "CNF_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Confirmed.tolist()[-samples:]))))
+	latest_tally.loc[idx, "DCS_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:]))))
 
 #Re-index, re-order and sort the columns.
 latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = "Confirmed", ascending = False, ignore_index = True)

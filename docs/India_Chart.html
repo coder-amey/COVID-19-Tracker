@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163333901-1"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-163333901-1');
+		</script>
+
+		<title>COVID-19</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<!-- Google Font Poppins -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+		<!-- Icon Library -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<!--Charting Library-->
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+		<!--Range-Slider Libraries-->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/css/bootstrap-slider.min.css" rel="stylesheet">
+ 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.min.js" ></script>
+		<!-- Local Libraries -->
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="chart.css">
+		<script src="script.js"></script>
+		<script src="chart.js"></script>
+
+		<script>
+			var chart_data, regions, r_filtered, subfilter, transform, logScale, pred, epoch, delta, x_window, stop_render;		//Global variables and parameters.
+			//Load the JSON data.
+			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/chart/data/India_series.json')
+				.then(function(response) {
+					return response.text().then(function(text) {
+						chart_data = JSON.parse(text);
+
+						stop_render = true;		//Prevent chart rendering until parameters have been fully initialized.
+						init_params();			//Initialize the parameters and tools.
+
+						stop_render = false;	//Enable chart rendering.
+						render_chart();			//Render the chart.
+					});
+				});
+		</script>
+	
+	</head>
+
+	<body>
+		<div id="overlay" onclick="hide_menu()"></div>
+		<div class="container">
+			<div class="text-center">
+				<div class="pt-1 pb-3">
+					<h1 class="primary-title mb-2">COVID-19 Tracker</h1>
+				</div>
+
+				<div class="pt-2 pb-2">
+					<button type="button" class="btn" onclick="window.location.href = 'Global_tracker.html';">Go to Global Trends</button>
+				</div>
+
+				<div class="pt-2 pb-5">
+					<button type="button" class="btn" onclick="window.location.href = 'India_tracker.html';">Go to Indian Trends</button>
+				</div>
+
+				<!-- Link to other chart -->
+				<div>
+					<h3 class='text-center pt-4'>INDIA - Regional</h3>
+				</div>
+
+				<div class="pt-2 pb-4">
+					<button type="button" class="btn" onclick="window.location.href = 'Global_chart.html';">Go to Global Chart</button>
+				</div>
+			</div>
+
+			<h6 id="note"><center> LOADING... </center></h6>			
+			<div id="chart_area" class="chart_area" style="display: none;">
+				<div class="toolbar">
+					<div class="tool"><button type="button" class="btn" onclick="load_menu()">Filter Data</button></div>
+
+					<div id="menu">
+						<div class="filter_view">
+							<h5>Regions</h5>
+
+							<div class="reg_list">
+								<ul id="regions_selected"></ul>
+							</div>
+						
+							<div class="tool"><button type="button" class="btn" onclick="clear_filter();">Clear</button></div>
+							<div class="tool"><button type="button" class="btn" onclick="reset_filter();">Reset</button></div>
+							<i class="fa fa-search" style="padding-left: 10px;"></i><input type="text" id="region_selector" onkeyup="filter_list()" placeholder="Add a region">
+
+							<div class="reg_list">	
+								<ul  id="regions_unselected"></ul>
+							</div>
+
+							<div class="text-center"><button type="button" class="btn" onclick="hide_menu();">Done</button></div>
+						</div>
+					</div>
+
+					<div class="tool">
+						<label id="transform"></label><br>
+						<label class="switch"><input type="checkbox" id="transform_toggle" onclick="toggle_transform()"><span class="toggle"></span></label>
+					</div>
+					
+					<div class="tab">
+						<button class="tabs" onclick="set_subfilter(event, 'Infected')" id="defaultOpen">Infected</button>
+						<button class="tabs" onclick="set_subfilter(event, 'Active')">Active</button>
+						<button class="tabs" onclick="set_subfilter(event, 'Recovered')">Recovered</button>
+						<button class="tabs" onclick="set_subfilter(event, 'Deceased')">Deceased</button>
+					</div>
+				</div>
+
+				<div class="toolbar">
+					<div class="tool">
+						<label id="scale"></label><br>
+						<label class="switch"><input type="checkbox" id="scale_toggle" onclick="toggle_scale()"><span class="toggle"></span></label>
+					</div>
+
+					<div class="tool">
+						<label>Predictions</label><br>
+						<label class="switch"><input type="checkbox" id="pred_trigger" onclick="trigger_pred()"><span class="trigger"></span></label>
+						<!--<label>Show Prediction <label class="switch"><input type="checkbox" disabled><span class="trigger"></span></label>-->
+					</div>
+				</div>
+
+				<div id="chart" class="chart_canvas"></div>
+
+				<div class="toolbar">
+					<div class="range-tool">
+						<input id="range-picker" type="text">
+					</div>
+				</div>
+			</div>
+			
+			<div id = "appeal" class="text-center pt-5">
+				<p style="font-size: 13px">
+					*Some incremental values may be anomalously negative due to retrospective revision and correction of the data by the authorities.
+				</p><br>
+				<p>Stay Indoors. Stay Safe.<br>Co-operate with the authorities.<br>&#2384; शांति।</p>
+				<hr style="border: 1px solid #e53935; max-width: 40%;">
+			</div>
+		</div>
+
+		<div class="info_banner">
+			<div class="container">
+				<h5>How prediction works</h5>
+				<ul class="line">
+					<li>The data-points are fitted to an exponential curve (<i>y = ab<sup>x</sup></i>).</li>
+					<li>The discovered values of parameters '<i>a</i>' and '<i>b</i>' are used to predict the next expected value.</li>
+					<li>As the situation is rapidly evolving, the characteristics of the curve change rapidly.</li>
+					<li>Thus, only the last three data-points are used to fit the curve using exponential regression for an optimal prediction.</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="footer">
+			<div class="footer-container">
+				<div class="footer-info">
+					<h5>Authors</h5>
+					<ul class="line">
+						<li>Datasets & Analytics:
+							<ul class="line">
+								<li>Amey Noolkar</li>
+								<li> <div class="author-social">
+									<a class="btn-floating" type="button" role="button" href="https://in.linkedin.com/in/amey-noolkar-17a988192" target="_blank"><i class="fa fa-linkedin"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://github.com/coder-amey" target="_blank"><i class="fa fa-github"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://twitter.com/ameynoolkar" target="_blank"><i class="fa fa-twitter"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://www.facebook.com/amey.noolkar" target="_blank"><i class="fa fa-facebook"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://www.instagram.com/amey_noolkar" target="_blank"><i class="fa fa-instagram"></i></a>
+								</div></li>
+							</ul>
+						</li>	
+						<li>Layout & UI:
+							<ul class="line">
+								<li>Gaurang Patel</li>
+								<li><div class="author-social">
+									<a class="btn-floating" type="button" role="button" href="https://www.linkedin.com/in/gaurang-patel-42959416a" target="_blank"><i class="fa fa-linkedin"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://github.com/Gaurang484" target="_blank"><i class="fa fa-github"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://twitter.com/gaurangpatel484" target="_blank"><i class="fa fa-twitter"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://www.facebook.com/people/Gaurang-Patel/100005509960910" target="_blank"><i class="fa fa-facebook"></i></a>
+									<a class="btn-floating" type="button" role="button" href="https://www.instagram.com/gaurangpatel484" target="_blank"><i class="fa fa-instagram"></i></a>
+								</div></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="footer-info">
+					<h5>Sources</h5>
+					<ul class="line">
+						<li>Global Data:</li>
+						<li><a href="https://github.com/datasets/covid-19" target="_blank"> covid-19</a></li>
+						<li>Indian Regional Data:</li>
+						<li><a href="https://github.com/coder-amey/COVID-19-India_Data" target="_blank"> COVID-19_India_Data</a></li>
+					</ul>
+					<br>
+					<span style="font-size: 12px">
+						*This is an Open-Source <a href="https://github.com/coder-amey/COVID-19-DataVisualization" target="_blank"> Project.
+					</span>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

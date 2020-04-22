@@ -64,7 +64,7 @@ epoch = time_series.Date.tolist()[0]														#First day of recorded data.
 time_series.Date = time_series.Date.dt.strftime("%Y-%m-%d")				#Shorten dates to save space.
 
 chart_data["regions"] = list(latest_tally.index.unique())							#Regions sorted in decreasing order of cases.
-chart_data["interval"] = [epoch, last_day.strftime("%Y-%m-%d")]			#Store range of dates.
+chart_data["interval"] = [epoch.strftime("%Y-%m-%d"), last_day.strftime("%Y-%m-%d")]			#Store range of dates.
 chart_data["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"		#Include last update time.
 chart_data["series"] = dict()
 

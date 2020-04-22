@@ -288,6 +288,6 @@ input:disabled + .trigger:before {
 	}
 
 	.chart_canvas {
-		height: 250px;
+		height: 350px;
 	}
 }

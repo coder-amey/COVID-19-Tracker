@@ -240,7 +240,7 @@ input:disabled + .trigger:before {
 
 .chart_canvas {
 	width: 100%;
-	height: 425px;
+	height: 475px;
 	margin-bottom: 0.5rem;
 	overflow: hidden;
 	z-index: 0;
@@ -292,9 +292,9 @@ input:disabled + .trigger:before {
 	}
 }
 
-@media only screen and (max-height: 768px) {
+@media only screen and (max-width: 1024px) {
 	.chart_canvas {
-		height: 300px;
+		height: 375px;
 	}
 
 	.tool {

@@ -269,7 +269,7 @@ input:disabled + .trigger:before {
 	background: #da4a38;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
 	.tool {
 		width: 45%;
 	}
@@ -289,15 +289,5 @@ input:disabled + .trigger:before {
 
 	.chart_canvas {
 		height: 350px;
-	}
-}
-
-@media only screen and (max-width: 1024px) {
-	.chart_canvas {
-		height: 375px;
-	}
-
-	.tool {
-		width: 45%;
 	}
 }

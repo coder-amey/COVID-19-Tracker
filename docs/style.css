@@ -166,14 +166,14 @@ ul.line {
 	font-size: 20px;
 }
 
-@media only screen and (max-width: 1420px) {
+@media only screen and (max-width: 1680px) {
 	.container {
 		width: 90%;
 		display: block;
 		padding-bottom: 1.5rem;
 	}
 
-	.footer-container {		
+	.footer-container {
 		margin: auto;
 		width: 70%;
 		display: block;

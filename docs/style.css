@@ -31,6 +31,8 @@ a:hover {
 }
 
 .btn {
+	margin-left: 1rem;
+	margin-right: 1rem;
 	color: #fff;
 	background-color: #da4a38;
 }

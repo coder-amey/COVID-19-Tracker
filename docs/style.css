@@ -1,6 +1,7 @@
 body {
+	padding-top: 2rem;
 	font-family: 'Poppins', sans-serif;
-	background-color: #FAFAFA;
+	background-color: #fafafa;
 }
 
 a {
@@ -139,10 +140,12 @@ ul.line {
 }
 
 .footer {
+	position: relative;
+	bottom:0;
 	width: 100%;
 	background-color: #343a40;
 	color: #fff;
-	padding: 2rem 2rem 2rem 2rem;
+	padding: 1rem 1rem 1rem 1rem;
 }
 
 .footer-container {
@@ -166,7 +169,7 @@ ul.line {
 	font-size: 20px;
 }
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 995px) {
 	.container {
 		width: 90%;
 		display: block;

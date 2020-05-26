@@ -41,7 +41,7 @@ for region in predictables.Region.unique():
 	latest_tally.loc[idx, "DCS_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:]))))
 
 #Re-index, re-order and sort the columns.
-latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = "Deceased", ascending = False, ignore_index = True)
+latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Deceased", "Confirmed", "Region"], ascending = False, ignore_index = True)
 latest_tally = latest_tally.set_index("Region")
 
 #Write the table in the JSON file.

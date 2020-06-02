@@ -7,13 +7,7 @@ from regression import *
 
 data.options.mode.chained_assignment = None
 samples = 3			#Points to be sampled for regression.
-time_series = data.read_csv("https://raw.githubusercontent.com/datasets/covid-19/master/data/countries-aggregated.csv")		#Load the country-wise time-series.
-df_global = data.read_csv("https://raw.githubusercontent.com/datasets/covid-19/master/data/worldwide-aggregated.csv")		#Load the global time-series.
-#Reformat and combine the two series into a uniform format.
-df_global["Country"] = "Global Total"
-df_global = df_global.drop(columns = ["Increase rate"])
-time_series = time_series.append(df_global)
-time_series = time_series.rename(columns = {'Country': 'Region', 'Recovered': 'Recovered/Migrated', 'Deaths': 'Deceased'})
+time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-19-Global_Data/master/time-series/Global_aggregated.csv")		#Load the time-series.
 
 latest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-1]]		#Date of last update.
 yest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-2]]		#Previous day's tally.
@@ -37,15 +31,17 @@ for region in yest_tally.Region.unique():
 	latest_tally.loc[idx, "RCV_inc"] = latest_tally[window].iat[0, 3] - yest_tally[window_yest].iat[0, 3]
 	latest_tally.loc[idx, "DCS_inc"] = latest_tally[window].iat[0, 4] - yest_tally[window_yest].iat[0, 4]
 
+
 #Calculate and store the predictions for each region.
 for region in predictables.Region.unique():
 	window = latest_tally.Region == region
 	idx = latest_tally[window].index
+	
 	latest_tally.loc[idx, "CNF_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Confirmed.tolist()[-samples:]))))
 	latest_tally.loc[idx, "DCS_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:]))))
 
 #Re-index, re-order and sort the columns.
-latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Deceased", "Confirmed", "Region"], ascending = False, ignore_index = True)
+latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Deceased", "Confirmed"], ascending = False, ignore_index = True)
 latest_tally = latest_tally.set_index("Region")
 
 #Write the table in the JSON file.
@@ -84,3 +80,4 @@ for region in chart_data["regions"]:
 #Write the charting data in the JSON file.
 with open(base_dir + 'data/Global_series.json', 'w') as jfile:
 	json.dump(chart_data, jfile)
+	

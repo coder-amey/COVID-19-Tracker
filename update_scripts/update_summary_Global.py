@@ -48,7 +48,7 @@ latest_tally = latest_tally.set_index("Region")
 base_dir = os.path.join(os.path.dirname(__file__), "../")		#Obtain the path to the base directory for absosulte addressing.
 summary = json.loads(latest_tally.to_json(orient = 'split', index = True))
 summary["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"			#Include last update time.
-with open(base_dir + 'data//Global_summary.json', 'w') as jfile:
+with open(base_dir + 'data/Global_summary.json', 'w') as jfile:
 	json.dump(summary, jfile)
 
 #Prepare charting data.

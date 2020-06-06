@@ -40,7 +40,7 @@
 				.then(function(response) {
 					return response.text().then(function(text) {
 						summary = JSON.parse(text);
-						tabulate(summary, 20);
+						tabulate(summary, 30);
 						render_selection(summary);
 					});
 				});

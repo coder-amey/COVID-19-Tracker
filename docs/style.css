@@ -47,10 +47,6 @@ a:hover {
 	padding: 7px 7px;
 }
 
-.table_view {
-	overflow: scroll;
-}
-
 table thead th tbody tr td {
 	border: none;
 	border-collapse: collapse;
@@ -117,7 +113,6 @@ tr:nth-child(odd) {
 
 .selection {
 	margin-bottom: 1.5rem;
-	overflow: scroll;
 }
 
 ul.line {
@@ -174,6 +169,14 @@ ul.line {
 		width: 90%;
 		display: block;
 		padding-bottom: 1.5rem;
+	}
+
+	.table_view {
+		overflow-x: scroll;
+	}
+
+	.selection {
+		overflow-x: scroll;
 	}
 
 	.footer-container {

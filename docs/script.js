@@ -2,7 +2,7 @@ function tabulate(summary, max_rows) {
 	var table = "<h6>Last updated: " + summary["update_time"] + "</h6>\n";
 	table += "<table class='table'><thead class='thead-dark'>\n";
 	table += "<tr><th rowspan='2'>Region</th><th style='text-align: center' rowspan='2' colspan='2'>Confirmed</th>";
-	table += "<th style='text-align: center' rowspan='2' colspan='2'>Active</th><th style='text-align: center' rowspan='2' colspan='2'>Recovered/Migrated</th>";
+	table += "<th style='text-align: center' rowspan='2' colspan='2'>Active</th><th style='text-align: center' rowspan='2' colspan='2'>Recovered</th>";
 	table += "<th style='text-align: center' rowspan='2' colspan='2'>Deceased</th><th style='text-align: center' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
 	table += "<tr><th style='text-align: center'>Confirmed</th><th style='text-align: center'>Deceased</th></tr>\n";
 	table += "</thead>\n";
@@ -44,7 +44,7 @@ function fetch_row(summary) {
 	var entry = "<h6>Last updated: " + summary["update_time"] + "</h6>\n";
 	entry += "<table class='table'><thead class='thead-dark'>\n";
 	entry += "<tr><th rowspan='2'>Region</th><th style='text-align: center' rowspan='2' colspan='2'>Confirmed</th>";
-	entry += "<th style='text-align: center' rowspan='2' colspan='2'>Active</th><th style='text-align: center' rowspan='2' colspan='2'>Recovered/Migrated</th>";
+	entry += "<th style='text-align: center' rowspan='2' colspan='2'>Active</th><th style='text-align: center' rowspan='2' colspan='2'>Recovered</th>";
 	entry += "<th style='text-align: center' rowspan='2' colspan='2'>Deceased</th><th style='text-align: center' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
 	entry += "<tr><th style='text-align: center'>Confirmed</th><th style='text-align: center'>Deceased</th></tr>\n";
 	entry += "</thead>\n";

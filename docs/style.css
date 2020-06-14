@@ -52,7 +52,8 @@ tr:nth-child(odd) {
 }
 
 td {
-	min-width: 100px;
+	min-width: 80px;
+	padding: 0.75rem 0.25rem 0.75rem 0.25rem !important;
 }
 
 .region {

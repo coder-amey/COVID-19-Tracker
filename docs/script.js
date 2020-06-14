@@ -1,6 +1,4 @@
 function tabulate(summary, max_rows) {
-	var shade = 179;
-	var step = (255 - shade) / max_rows;
 	var table = "<h6>Last updated: " + summary["update_time"] + "</h6>\n";
 	table += "<table class='table'><thead class='thead-dark'>\n";
 	table += "<tr><th rowspan='2'>Region</th><th style='text-align: center' rowspan='2'>Confirmed</th>";
@@ -11,7 +9,6 @@ function tabulate(summary, max_rows) {
 	table += "<tbody>\n";
 	for (var i = 0; i < max_rows; i ++) {
 		var row = summary["data"][i];
-		shade += step;
 		table += "<tr><td class='region'>" + summary["index"][i] + "</td>";
 		table += "<td class='confirmed'><span class = 'cell_block'>" + row[0] + " </span><span class='up_light_red'></span> <span class='increment'> " + row[1] + "</span></td>";
 		table += "<td class='recovered'><span class = 'cell_block'>" + row[2] + " </span><span class='up_green'></span> <span class='increment'> " + row[3] + "</span></td>";

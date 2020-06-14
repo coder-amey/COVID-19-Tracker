@@ -31,6 +31,9 @@ for region in yest_tally.Region.unique():
 	latest_tally.loc[idx, "RCV_inc"] = latest_tally[window].iat[0, 3] - yest_tally[window_yest].iat[0, 3]
 	latest_tally.loc[idx, "DCS_inc"] = latest_tally[window].iat[0, 4] - yest_tally[window_yest].iat[0, 4]
 
+#Insert and populate columns for active cases and their increments in every region.
+latest_tally["Active"] = latest_tally["Confirmed"] - latest_tally["Recovered/Migrated"] - latest_tally["Deceased"]
+latest_tally["ACT_inc"] = latest_tally["CNF_inc"] - latest_tally["RCV_inc"] - latest_tally["DCS_inc"]
 
 #Calculate and store the predictions for each region.
 for region in predictables.Region.unique():
@@ -41,11 +44,11 @@ for region in predictables.Region.unique():
 	latest_tally.loc[idx, "DCS_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:]))))
 
 #Re-index, re-order and sort the columns.
-latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Deceased", "Confirmed"], ascending = False, ignore_index = True)
+latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Active", "ACT_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Active", "Deceased", "Confirmed"], ascending = False, ignore_index = True)
 latest_tally = latest_tally.set_index("Region")
 
 #Write the table in the JSON file.
-base_dir = os.path.join(os.path.dirname(__file__), "../")		#Obtain the path to the base directory for absosulte addressing.
+base_dir = os.path.join(os.path.dirname(__file__), "../")		#Obtain the path to the base directory for absolute addressing.
 summary = json.loads(latest_tally.to_json(orient = 'split', index = True))
 summary["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"			#Include last update time.
 with open(base_dir + 'data/Global_summary.json', 'w') as jfile:

@@ -52,7 +52,8 @@ tr:nth-child(odd) {
 }
 
 td {
-	min-width: 100px;
+	min-width: 80px;
+	padding: 0.75rem 0.25rem 0.75rem 0.25rem !important;
 }
 
 .region {
@@ -78,6 +79,10 @@ td {
 
 .confirmed {
 	color: #e53935;
+}
+
+.active {
+	color: #005cc5;
 }
 
 .recovered {
@@ -107,6 +112,14 @@ td {
 .up_green {
 	display:inline-block;
     border-bottom:8px solid #090;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    vertical-align:middle;
+}
+
+.down_green {
+	display:inline-block;
+    border-top:8px solid #090;
     border-left:8px solid transparent;
     border-right:8px solid transparent;
     vertical-align:middle;

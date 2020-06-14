@@ -1,7 +1,7 @@
 //Initialize Paramters and their values/tools.
 function init_params() {
 	regions = chart_data["regions"];		//Load default regions.
-	r_filtered = regions.slice(1, 11);	//Load default region filter.
+	r_filtered = regions.slice(1, 8);	//Load default region filter.
 
 	var defaults = document.getElementsByTagName('input'); 	//Set all switches to their default values.
 		for(var i = 0; i < defaults.length; i++){ 
@@ -21,7 +21,7 @@ function init_params() {
 	init_slider("#range-picker", delta);				//Initialize the range-slider to the default view.
 
 	//Set the colour scheme for trend lines.
-	CanvasJS.addColorSet("colourTheme",["#f50a0a", "#ffff00", "#005ce6", "#33ffad", "#ff00bf", "#002080", "#000000", "#ff471a", "#99e6ff", "#00cc00", "#a3a375", "#4d004d", "#c65353", "#a0a0a0", "#ffb84d"]);
+	CanvasJS.addColorSet("colourTheme",["#f50a0a", "#005ce6", "#33ffad", "#ffb84d", "#ff00bf", "#00cc00", "#000000", "#002080", "#99e6ff", "#a3a375", "#4d004d", "#c65353", "#ffff00", "#a0a0a0", "#e21f2a"]);
 
 	document.getElementById("note").innerHTML = "Last updated: " + chart_data["update_time"];		//Mention the time of last update.
 	document.getElementById("chart_area").style.display = "block";												//Unhide the chart area.
@@ -62,8 +62,8 @@ function rmvReg(index) {
 
 //Add a region to the filter.
 function addReg(index) {
-	if(r_filtered.length == 15) {
-		alert("A maximum of 15 regions can be selected simultaneously.");
+	if(r_filtered.length == 12) {
+		alert("A maximum of 12 regions can be selected simultaneously.");
 	}
 	else {
 		r_filtered.push(regions[index]);

@@ -4,12 +4,13 @@ function init_params() {
 	r_filtered = regions.slice(1, 8);	//Load default region filter.
 
 	var defaults = document.getElementsByTagName('input'); 	//Set all switches to their default values.
-		for(var i = 0; i < defaults.length; i++){ 
-			if(defaults[i].type=='checkbox'){ 
-				defaults[i].checked = false; 
-				defaults[i].click();
-			}
+	
+	for(var i = 0; i < defaults.length; i++){ 
+		if(defaults[i].type=='checkbox'){ 
+			defaults[i].checked = false; 
+			defaults[i].click();
 		}
+	}
 	
 	document.getElementById("defaultOpen").click();				//Set the default sub-filter as "Infected".
 

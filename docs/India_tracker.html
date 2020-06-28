@@ -5,11 +5,11 @@
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163333901-1"></script>
 		<script>
-		  window.dataLayer = window.dataLayer || [];
-		  function gtag(){dataLayer.push(arguments);}
-		  gtag('js', new Date());
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
 
-		  gtag('config', 'UA-163333901-1');
+			gtag('config', 'UA-163333901-1');
 		</script>
 
 		<title>COVID-19</title>
@@ -24,14 +24,16 @@
 		<!-- Style Library -->
 		<link rel="stylesheet" href="style.css">
 		<!-- JavaScript Library -->
-		<script src="script.js"></script>
+		<script src="table.js"></script>
 		<script>
-			var summary;
+			var summary, max_rows, sort_by_col, ascending, index_arr;		//Global variables and parameters.
 			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/master/data/India_regional_summary.json')
 				.then(function(response) {
 					return response.text().then(function(text) {
 						summary = JSON.parse(text);
-						tabulate(summary, summary["data"].length)
+						max_rows = summary["data"].length;		//Maximum rows to be displayed.
+						init_params();			//Initialize the parameters and tools.
+						tabulate(summary, max_rows, index_arr);
 					});
 				});
 		</script>

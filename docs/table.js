@@ -2,7 +2,7 @@ function init_params() {
 	sort_by_col = 1;		//Active cases (default from JSON). {CNF: 1; ACT: 2; RCV: 3; DCS: 4}.
 	ascending = false;		//Sort in descending order by default.
 	index_arr = []		//Default array for table indices.
-	for (var i = 0; i < max_rows; i ++) {
+	for (var i = 0; i < summary["data"].length; i ++) {
 		index_arr.push(i);
 	}
 }
@@ -115,6 +115,4 @@ function	orderBy(col) {
 	}
 	var order = sort(summary["data"], 2 * sort_by_col, max_rows, ascending);
 	tabulate(summary, max_rows, order);
-	document.getElementById("table").innerHTML += index_arr;
-	document.getElementById("table").innerHTML += order;
 }

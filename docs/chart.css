@@ -271,7 +271,7 @@ input:disabled + .trigger:before {
 
 @media only screen and (max-width: 995px) {
 	 #menu{
-		width: 55%;
+		width: 60%;
 	}
 
 	.chart_canvas {

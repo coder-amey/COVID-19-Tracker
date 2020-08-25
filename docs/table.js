@@ -11,10 +11,10 @@ function tabulate(summary, max_rows, order) {
 	var table = "<h6>Last updated: " + summary["update_time"] + "</h6>\n";
 	table += "<table class='table'><thead class='thead-dark'>\n";
 	table += "<tr><th rowspan='2'>Region</th>";
-	table += "<th style='text-align: center' rowspan='2' colspan='2'>Confirmed <a class='btn-floating' type='button' role='button' onclick='orderBy(0)'><i id='c0' class='fa fa-sort'></i></th>";
-	table += "<th style='text-align: center' rowspan='2' colspan='2'>Active <a class='btn-floating' type='button' role='button' onclick='orderBy(1)'><i id='c1' class='fa fa-sort'></i></th>";
-	table += "<th style='text-align: center' rowspan='2' colspan='2'>Recovered <a class='btn-floating' type='button' role='button' onclick='orderBy(2)'><i id='c2' class='fa fa-sort'></i></th>";
-	table += "<th style='text-align: center' rowspan='2' colspan='2'>Deceased <a class='btn-floating' type='button' role='button' onclick='orderBy(3)'><i id='c3' class='fa fa-sort'></i></th>";
+	table += "<th style='text-align: center' rowspan='2' colspan='2'><a class='btn-floating' type='button' role='button' onclick='orderBy(0)'>Confirmed <i id='c0' class='fa fa-sort'></i></a></th>";
+	table += "<th style='text-align: center' rowspan='2' colspan='2'><a class='btn-floating' type='button' role='button' onclick='orderBy(1)'>Active <i id='c1' class='fa fa-sort'></i></a></th>";
+	table += "<th style='text-align: center' rowspan='2' colspan='2'><a class='btn-floating' type='button' role='button' onclick='orderBy(2)'>Recovered <i id='c2' class='fa fa-sort'></i></a></th>";
+	table += "<th style='text-align: center' rowspan='2' colspan='2'><a class='btn-floating' type='button' role='button' onclick='orderBy(3)'>Deceased <i id='c3' class='fa fa-sort'></i></a></th>";
 	table += "<th style='text-align: center' colspan='2'>Prediction (for T + 1 Day)</th></tr>\n";
 	table += "<tr><th style='text-align: center'>Confirmed</th><th style='text-align: center'>Deceased</th></tr>\n";
 	table += "</thead>\n";

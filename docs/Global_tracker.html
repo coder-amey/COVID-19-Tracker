@@ -28,7 +28,7 @@
 		<script src="table.js"></script>
 		<script>
 			var summary, max_rows, sort_by_col, ascending, index_arr;		//Global variables and parameters.
-			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/master/data/Global_summary.json')
+			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-Tracker/master/data/Global_summary.json')
 				.then(function(response) {
 					return response.text().then(function(text) {
 						summary = JSON.parse(text);
@@ -125,7 +125,7 @@
 					</ul>
 					<br>
 					<span style="font-size: 12px">
-						*This is an Open-Source <a href="https://github.com/coder-amey/COVID-19-DataVisualization" target="_blank"> Project</a>.
+						*This is an Open-Source <a href="https://github.com/coder-amey/COVID-19-Tracker" target="_blank"> Project</a>.
 					</span>
 				</div>
 			</div>

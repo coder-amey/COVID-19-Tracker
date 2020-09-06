@@ -35,7 +35,7 @@
 		<script>
 			var chart_data, regions, r_filtered, subfilter, transform, logScale, pred, epoch, delta, x_window, stop_render;		//Global variables and parameters.
 			//Load the JSON data.
-			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-DataVisualization/master/data/India_series.json')
+			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-Tracker/master/data/India_series.json')
 				.then(function(response) {
 					return response.text().then(function(text) {
 						chart_data = JSON.parse(text);
@@ -196,7 +196,7 @@
 					</ul>
 					<br>
 					<span style="font-size: 12px">
-						*This is an Open-Source <a href="https://github.com/coder-amey/COVID-19-DataVisualization" target="_blank"> Project</a>.
+						*This is an Open-Source <a href="https://github.com/coder-amey/COVID-19-Tracker" target="_blank"> Project</a>.
 					</span>
 				</div>
 			</div>

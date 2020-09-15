@@ -1,4 +1,4 @@
-# COVID-19-DataVisualization
+# COVID-19-Tracker
 This repository houses code for the visualization of data pertaining to the spread of COVID-19.
 
 ## Introduction:

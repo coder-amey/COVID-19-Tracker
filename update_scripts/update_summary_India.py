@@ -6,7 +6,7 @@ from datetime import datetime
 from regression import *
 
 data.options.mode.chained_assignment = None
-samples = 3			#Points to be sampled for regression.
+samples = 5			#Points to be sampled for regression.
 time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-19-India_Data/master/time-series/India_regional_aggregated.csv")		#Load the time-series.
 
 latest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-1]]		#Date of last update.

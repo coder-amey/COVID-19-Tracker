@@ -11,7 +11,6 @@ time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-
 
 latest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-1]]		#Date of last update.
 yest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-2]]		#Previous day's tally.
-yest_tally = yest_tally[yest_tally.Region != "Western Sahara"]			#Remove the record of Western Sahara.
 predictables = time_series.loc[time_series["Date"] == time_series.Date.unique()[-samples]]	#Regions with enough data for a prediction.
 
 #Add new columns to track increments in each type of cases (initialized as current number of cases).

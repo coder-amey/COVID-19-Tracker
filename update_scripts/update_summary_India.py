@@ -7,7 +7,7 @@ from regression import *
 
 data.options.mode.chained_assignment = None
 samples = 5			#Points to be sampled for regression.
-time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-19-India_Data/master/time-series/India_regional_aggregated.csv")		#Load the time-series.
+time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-19-India_Data/master/time-series/India_aggregated.csv")		#Load the time-series.
 
 latest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-1]]		#Date of last update.
 yest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-2]]		#Previous day's tally.
@@ -15,7 +15,7 @@ predictables = time_series.loc[time_series["Date"] == time_series.Date.unique()[
 
 #Add new columns to track increments in each type of cases (initialized as current number of cases).
 latest_tally["CNF_inc"] = latest_tally["Confirmed"].copy()
-latest_tally["RCV_inc"] = latest_tally["Recovered/Migrated"].copy()
+latest_tally["RCV_inc"] = latest_tally["Recovered"].copy()
 latest_tally["DCS_inc"] = latest_tally["Deceased"].copy()
 
 #Add new columns to store predictions (initialized to current tallies).
@@ -32,7 +32,7 @@ for region in yest_tally.Region.unique():
 	latest_tally.loc[idx, "DCS_inc"] = latest_tally[window].iat[0, 4] - yest_tally[window_yest].iat[0, 4]
 
 #Insert and populate columns for active cases and their increments in every region.
-latest_tally["Active"] = latest_tally["Confirmed"] - latest_tally["Recovered/Migrated"] - latest_tally["Deceased"]
+latest_tally["Active"] = latest_tally["Confirmed"] - latest_tally["Recovered"] - latest_tally["Deceased"]
 latest_tally["ACT_inc"] = latest_tally["CNF_inc"] - latest_tally["RCV_inc"] - latest_tally["DCS_inc"]
 
 #Calculate and store the predictions for each region.
@@ -44,14 +44,14 @@ for region in predictables.Region.unique():
 	latest_tally.loc[idx, "DCS_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:]))))
 
 #Re-index, re-order and sort the columns.
-latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Active", "ACT_inc", "Recovered/Migrated", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Active", "Deceased", "Confirmed"], ascending = False, ignore_index = True)
+latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Active", "ACT_inc", "Recovered", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Active", "Deceased", "Confirmed"], ascending = False, ignore_index = True)
 latest_tally = latest_tally.set_index("Region")
 
 #Write the table in the JSON file.
 base_dir = os.path.join(os.path.dirname(__file__), "../")		#Obtain the path to the base directory for absolute addressing.
 summary = json.loads(latest_tally.to_json(orient = 'split', index = True))
 summary["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"			#Include last update time.
-with open(base_dir + 'data/India_regional_summary.json', 'w') as jfile:
+with open(base_dir + 'data/India_summary.json', 'w') as jfile:
 	json.dump(summary, jfile)
 
 #Prepare charting data.
@@ -73,8 +73,8 @@ for region in chart_data["regions"]:
 	chart_data["series"][region] = dict()
 	chart_data["series"][region]["Date"] = df.Date.tolist()
 	chart_data["series"][region]["Infected"] = df.Confirmed.astype(int, copy = True).tolist()
-	chart_data["series"][region]["Active"] = (df.Confirmed - df["Recovered/Migrated"] - df.Deceased).astype(int, copy = True).tolist()
-	chart_data["series"][region]["Recovered"] = df["Recovered/Migrated"].astype(int, copy = True).tolist()
+	chart_data["series"][region]["Active"] = (df.Confirmed - df["Recovered"] - df.Deceased).astype(int, copy = True).tolist()
+	chart_data["series"][region]["Recovered"] = df["Recovered"].astype(int, copy = True).tolist()
 	chart_data["series"][region]["Deceased"] = df.Deceased.astype(int, copy = True).tolist()
 	#Read and store predictions for the current region.
 	df = latest_tally[latest_tally.index == region]	

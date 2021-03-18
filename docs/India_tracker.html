@@ -28,7 +28,7 @@
 		<script src="table.js"></script>
 		<script>
 			var summary, max_rows, sort_by_col, ascending, index_arr;		//Global variables and parameters.
-			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-Tracker/master/data/India_regional_summary.json')
+			fetch('https://raw.githubusercontent.com/coder-amey/COVID-19-Tracker/master/data/India_summary.json')
 				.then(function(response) {
 					return response.text().then(function(text) {
 						summary = JSON.parse(text);

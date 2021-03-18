@@ -11,16 +11,12 @@ time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-
 
 latest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-1]]		#Date of last update.
 yest_tally = time_series.loc[time_series["Date"] == time_series.Date.unique()[-2]]		#Previous day's tally.
-predictables = time_series.loc[time_series["Date"] == time_series.Date.unique()[-samples]]	#Regions with enough data for a prediction.
+predictables = time_series[time_series["Date"] == time_series.Date.unique()[-samples]]	#Dataframe of regions with enough data for a prediction.
 
 #Add new columns to track increments in each type of cases (initialized as current number of cases).
 latest_tally["CNF_inc"] = latest_tally["Confirmed"].copy()
 latest_tally["RCV_inc"] = latest_tally["Recovered"].copy()
 latest_tally["DCS_inc"] = latest_tally["Deceased"].copy()
-
-#Add new columns to store predictions (initialized to current tallies).
-latest_tally["CNF_pred"] = latest_tally["Confirmed"].copy()
-latest_tally["DCS_pred"] = latest_tally["Deceased"].copy()
 
 #Subtract yesterday's tally from the respective cases from every region.
 for region in yest_tally.Region.unique():
@@ -35,15 +31,40 @@ for region in yest_tally.Region.unique():
 latest_tally["Active"] = latest_tally["Confirmed"] - latest_tally["Recovered"] - latest_tally["Deceased"]
 latest_tally["ACT_inc"] = latest_tally["CNF_inc"] - latest_tally["RCV_inc"] - latest_tally["DCS_inc"]
 
-#Calculate and store the predictions for each region.
+#Calculate and store the predictions for each region. [Vectorized approach]
+cnf_predictables = []
+cnf_matrix =[]
+dcs_predictables = []
+dcs_matrix = []
+latest_tally = latest_tally.set_index("Region")		#Set Region as the index for aligning prediction results.
 for region in predictables.Region.unique():
-	window = latest_tally.Region == region
-	idx = latest_tally[window].index
+	slice = time_series.Region == region
+	if(time_series[slice].Confirmed.tolist()[-samples] > 0):		#Ensure that only non-zero entries are passed.
+		cnf_predictables.append(region)								#Mark as predictable region.
+		cnf_matrix.append(time_series[slice].Confirmed.tolist()[-samples:])
 	
-	latest_tally.loc[idx, "CNF_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Confirmed.tolist()[-samples:]))))
-	latest_tally.loc[idx, "DCS_pred"] = int(round(exp_predict(samples, *exp_reg(time_series[time_series.Region == region].Deceased.tolist()[-samples:]))))
+	if(time_series[slice].Deceased.tolist()[-samples] > 0):		#Ensure that only non-zero entries are passed.
+		dcs_predictables.append(region)								#Mark as predictable region.
+		dcs_matrix.append(time_series[slice].Deceased.tolist()[-samples:])
 
-#Re-index, re-order and sort the columns.
+#Predict new infections:
+predictions = maths.rint(exp_predict(samples, *exp_reg(cnf_matrix)))
+predictions = data.Series(data = predictions, index = cnf_predictables)
+#For regions with insufficient data-points, mark current tally as the next prediction.
+for region in [region for region in latest_tally.index if region not in cnf_predictables]:
+	predictions[region] = latest_tally.loc[region].Confirmed
+latest_tally["CNF_pred"] = predictions
+
+#Predict new deaths:
+predictions = maths.rint(exp_predict(samples, *exp_reg(dcs_matrix)))
+predictions = data.Series(data = predictions, index = dcs_predictables)
+#For regions with insufficient data-points, mark current tally as the next prediction.
+for region in [region for region in latest_tally.index if region not in dcs_predictables]:
+	predictions[region] = latest_tally.loc[region].Deceased
+latest_tally["DCS_pred"] = predictions
+
+#Re-index, re-order and sort the columns. Resetting the index is necessary for maintaining compatibility with JSON format.
+latest_tally = latest_tally.reset_index()
 latest_tally = latest_tally[["Region", "Confirmed", "CNF_inc", "Active", "ACT_inc", "Recovered", "RCV_inc", "Deceased", "DCS_inc", "CNF_pred", "DCS_pred"]].sort_values(by = ["Active", "Deceased", "Confirmed"], ascending = False, ignore_index = True)
 latest_tally = latest_tally.set_index("Region")
 

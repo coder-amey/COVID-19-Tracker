@@ -29,7 +29,7 @@ def exp_reg(y):
 		if(len(y) == 1):		#If there's only one entry in y, then the required curve is a line parallel to the x-axis: y = y[0]
 			return(1, y[0])
 
-	elif(maths.any(maths.array(y) == 0)):
+	if(maths.any(maths.array(y) == 0)):
 			raise ValueError("Non-zero elements required.")
 
 	else:

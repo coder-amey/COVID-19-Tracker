@@ -75,10 +75,32 @@ summary["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"			#
 with open(base_dir + 'data/India_summary.json', 'w') as jfile:
 	json.dump(summary, jfile)
 
+time_series.Date = data.to_datetime(time_series.Date, dayfirst = True)	#Make dates compatible with javascript.
+
+#Create an empty dataframe for SCFR.
+SCFR = data.DataFrame(index = time_series.Region.unique(), columns = time_series.Date.unique()[49:])
+
+#Calculate and store the SCFR for each region. [Vectorized approach]
+for region in time_series.Region.unique():
+	region_df = time_series[time_series.Region == region]
+	dates = region_df.Date.tolist()
+	
+	cumulative_infections = maths.insert(region_df.Confirmed.to_numpy(), 0, 0)
+	infections = (cumulative_infections[1:] - cumulative_infections[:-1]).tolist()
+
+	cumulative_deaths = maths.insert(region_df.Deceased.to_numpy(), 0, 0)
+	deaths = (cumulative_deaths[1:] - cumulative_deaths[:-1]).tolist()
+
+	for i in range(49, len(deaths)):
+		numerator = maths.mean(deaths[i - 29: i +1])
+		denominator = maths.mean(infections[i - 29: i - 20])
+		if(denominator == 0):
+			denominator = 0.01
+		SCFR.loc[region, dates[i]] = round(numerator * 100 / denominator, 2)
+
+
 #Prepare charting data.
 chart_data = dict()
-
-time_series.Date = data.to_datetime(time_series.Date, dayfirst = True)	#Make dates compatible with javascript.
 last_day = time_series.Date.tolist()[-1] + dt.timedelta(days = 1) 			#Last day (including the prediction).
 epoch = time_series.Date.tolist()[0]														#First day of recorded data.
 time_series.Date = time_series.Date.dt.strftime("%Y-%m-%d")				#Shorten dates to save space.
@@ -100,7 +122,12 @@ for region in chart_data["regions"]:
 	#Read and store predictions for the current region.
 	df = latest_tally[latest_tally.index == region]	
 	chart_data["series"][region]["Prediction"] = df.CNF_pred.tolist() + df.DCS_pred.tolist()
-
+	#Read and store SCFR for the current region.
+	df = SCFR.loc[region]
+	chart_data["series"][region]["SCFR"] = dict()
+	chart_data["series"][region]["SCFR"]["values"] = df[df.notna()].tolist()
+	chart_data["series"][region]["SCFR"]["Date"] = chart_data["series"][region]["Date"][-len(chart_data["series"][region]["SCFR"]["values"]):]
+	
 #Write the charting data in the JSON file.
 with open(base_dir + 'data/India_series.json', 'w') as jfile:
 	json.dump(chart_data, jfile)

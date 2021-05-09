@@ -144,15 +144,31 @@ function set_subfilter(event, filter) {
 
 	subfilter = filter;
 	event.currentTarget.className += " active";
+	set_transform();
 	set_scale();
 	toggle_pred();
 	refresh_params();
 }
 
+//Toggle the functionality of the transform parameter.
+function set_transform() {
+	var toggle_switch = document.getElementById("transform_toggle");
+	var text = document.getElementById("transform");
+	if(subfilter == "SCFR") {
+		toggle_switch.checked = true;
+		toggle_switch.disabled = true;
+		transform = false;
+		text.innerHTML = "Cumulative Data";
+	}
+	else {
+		toggle_switch.disabled = false;
+	}
+}
+
 //Toggle the functionality of the scale parameter.
 function set_scale() {
 	var toggle_switch = document.getElementById("scale_toggle");
-	if(subfilter == "Active") {
+	if((subfilter == "Active") || (subfilter == "SCFR")) {
 		toggle_switch.checked = true;
 		toggle_switch.disabled = true;
 		logScale = false;
@@ -180,7 +196,7 @@ function toggle_scale() {
 //Toggle the functionality of the prediction parameter.
 function toggle_pred() {
 	var trigger_switch = document.getElementById("pred_trigger");
-	if(transform || (subfilter == "Active") || (subfilter == "Recovered")) {
+	if(transform || (subfilter == "Active") || (subfilter == "Recovered") || (subfilter == "SCFR")) {
 		trigger_switch.checked = false;
 		trigger_switch.disabled = true;
 		pred = false;
@@ -229,7 +245,11 @@ function refresh_params() {
 		var Ytitle = "";
 
 		//Set overall chart parameters.
-		if(transform) {		//Set Y-axis unit.
+		//Set Y-axis unit.
+		if(subfilter == "SCFR") {
+			Ytitle = "Percentage";
+		}
+		else if(transform) {
 			Ytitle = "Cases per Day";
 		}
 		else {
@@ -248,9 +268,17 @@ function refresh_params() {
 		//Generate series from filtered data.
 		for(var r in r_filtered) {
 			series_data = chart_data["series"][r_filtered[r]];											//chart_data["National Total"]
-			
-			series = series_data[subfilter];														//chart_data["National Total"]["Infected"]
-			dates =  series_data["Date"];
+
+			//[BOOKMARK]
+			if(subfilter == "SCFR") {
+				series = series_data[subfilter]["values"];														//chart_data["National Total"]["Infected"]
+				dates =  series_data[subfilter]["Date"];
+			}
+
+			else {			
+				series = series_data[subfilter];														//chart_data["National Total"]["Infected"]
+				dates =  series_data["Date"];
+			}
 			preds = series_data["Prediction"];
 			var dataPoints = [];			//Stores generated series.
 
@@ -296,7 +324,7 @@ function refresh_params() {
 			title:{
 				fontFamily: 'Poppins',
 				fontSize: 25,
-				text: subfilter + " Cases"
+				text: subfilter		//[BOOKMARK]
 			},
 			axisX: {
 				fontFamily: 'Poppins',

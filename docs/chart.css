@@ -30,7 +30,7 @@
 }
 
 .tool {
-	width: 30%;
+	width: 28%;
 	display: inline-block;
 	margin: auto;
 	vertical-align: middle;
@@ -281,7 +281,7 @@ input:disabled + .trigger:before {
 
 @media only screen and (max-width: 1200px) {
 	.tool {
-		width: 45%;
+		width: 40%;
 	}
 
 	.tab {

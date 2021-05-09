@@ -93,7 +93,7 @@ for region in time_series.Region.unique():
 
 	for i in range(49, len(deaths)):
 		numerator = maths.mean(deaths[i - 29: i +1])
-		denominator = maths.mean(infections[i - 29: i - 20])
+		denominator = maths.mean(infections[i - 49: i - 19])
 		if(denominator == 0):
 			denominator = 0.01
 		SCFR.loc[region, dates[i]] = round(numerator * 100 / denominator, 2)
@@ -127,7 +127,7 @@ for region in chart_data["regions"]:
 	chart_data["series"][region]["SCFR"] = dict()
 	chart_data["series"][region]["SCFR"]["values"] = df[df.notna()].tolist()
 	chart_data["series"][region]["SCFR"]["Date"] = chart_data["series"][region]["Date"][-len(chart_data["series"][region]["SCFR"]["values"]):]
-	
+
 #Write the charting data in the JSON file.
 with open(base_dir + 'data/India_series.json', 'w') as jfile:
 	json.dump(chart_data, jfile)

@@ -1,7 +1,21 @@
 //Initialize Paramters and their values/tools.
 function init_params() {
-	regions = chart_data["regions"];		//Load default regions.
-	r_filtered = regions.slice(1, 8);	//Load default region filter.
+	regions = chart_data["regions"];		//Load all regions.
+	const urlParams = new URLSearchParams(window.location.search);
+	r_filtered = []
+
+	if(urlParams.has("regions")) {		//Check for parameters.
+		var r_params = urlParams.getAll("regions");
+		for(var i  = 0; i < r_params.length; i++) {
+			if(regions.includes(r_params[i])) {
+				r_filtered.push(r_params[i])		//Accept only valid parameters.
+			}
+		}
+	}
+
+	if(r_filtered.length == 0) {
+		r_filtered = regions.slice(1, 8);	//Load default region filter.
+	}
 
 	var defaults = document.getElementsByTagName('input'); 	//Set all switches to their default values.
 	

@@ -1,10 +1,12 @@
-import pandas as data
-import os.path
-import json
 import datetime as dt
-from datetime import datetime
+from datetime import datetime, timezone
+import json
+import os.path
+import pandas as data
+import pytz
 from regression import *
 
+IST = pytz.timezone('Asia/Kolkata')
 data.options.mode.chained_assignment = None
 samples = 5			#Points to be sampled for regression.
 time_series = data.read_csv("https://raw.githubusercontent.com/coder-amey/COVID-19-Global_Data/master/time-series/Global_aggregated.csv")		#Load the time-series.
@@ -71,7 +73,7 @@ latest_tally = latest_tally.set_index("Region")
 #Write the table in the JSON file.
 base_dir = os.path.join(os.path.dirname(__file__), "../")		#Obtain the path to the base directory for absolute addressing.
 summary = json.loads(latest_tally.to_json(orient = 'split', index = True))
-summary["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"			#Include last update time.
+summary["update_time"] = datetime.now(IST).strftime("%d %B %Y, %H:%M IST")	#Include last update time.
 with open(base_dir + 'data/Global_summary.json', 'w') as jfile:
 	json.dump(summary, jfile)
 
@@ -85,7 +87,7 @@ time_series.Date = time_series.Date.dt.strftime("%Y-%m-%d")				#Shorten dates to
 
 chart_data["regions"] = list(latest_tally.index.unique())							#Regions sorted in decreasing order of cases.
 chart_data["interval"] = [epoch.strftime("%Y-%m-%d"), last_day.strftime("%Y-%m-%d")]			#Store range of dates.
-chart_data["update_time"] = datetime.now().strftime("%d %B %Y, %H:%M") + " IST"		#Include last update time.
+chart_data["update_time"] = datetime.now(IST).strftime("%d %B %Y, %H:%M IST")	#Include last update time.
 chart_data["series"] = dict()
 
 #Create and enlist region-wise objects containing series of different cases over time.
